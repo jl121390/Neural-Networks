@@ -1,0 +1,460 @@
+---
+title: "Group_1"
+author: "Joseph Lynch and Anand Taxali"
+date: "6/19/2020"
+output: html_document
+---
+```{r}
+
+library(readxl)
+toyota <- read_xlsx('C:/Users/Administrator/Documents/18 Toyota Corolla.xlsx')
+
+normalize <- function(x){
+  return ((x-min(x))/(max(x)-min(x)))
+}
+
+
+data.frame(colnames(toyota)) 
+str(toyota)
+toyota_2 <- toyota[,-c(1,2,8,11,15)]
+toyota_2$CC <- as.numeric(toyota_2$cc)
+
+toyota_norm <- as.data.frame(lapply(toyota_2,normalize))
+set.seed(1634)
+sample <- sample(1436,1077)
+
+toyota_train <- toyota_norm[sample,]
+toyota_test <- toyota_norm[-sample,]
+
+set.seed(1)
+nrow(toyota_train)
+library(neuralnet)
+
+data.frame(colnames(toyota_train)) 
+
+library(neuralnet)
+
+
+```{r}
+
+toyota_model1 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 1,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+toyota_model2 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.1,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model3 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model4 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.01,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+toyota_model5 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.005,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model6 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.001,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+```{r}
+
+
+#Predict values using models
+model_train_result1 <- neuralnet::compute(toyota_model1,toyota_train[2:33]) 
+predicted_train1  <- model_train_result1$net.result
+model_test_result1 <- neuralnet::compute(toyota_model1, toyota_test[2:33]) 
+predicted_test1 <- model_test_result1$net.result
+model_train_result2 <- neuralnet::compute(toyota_model2, toyota_train[2:33]) 
+predicted_train2 <- model_train_result2$net.result
+model_test_result2 <- neuralnet::compute(toyota_model2, toyota_test[2:33]) 
+predicted_test2 <- model_test_result2$net.result
+model_train_result3 <- neuralnet::compute(toyota_model3, toyota_train[2:33]) 
+predicted_train3 <- model_train_result3$net.result
+model_test_result3 <- neuralnet::compute(toyota_model3, toyota_test[2:33]) 
+predicted_test3 <- model_test_result3$net.result
+model_train_result4 <- neuralnet::compute(toyota_model4, toyota_train[2:33]) 
+predicted_train4 <- model_train_result4$net.result
+model_test_result4 <- neuralnet::compute(toyota_model4, toyota_test[2:33]) 
+predicted_test4 <- model_test_result4$net.result
+model_train_result5 <- neuralnet::compute(toyota_model5, toyota_train[2:33]) 
+predicted_train5 <- model_train_result5$net.result
+model_test_result5 <- neuralnet::compute(toyota_model5, toyota_test[2:33]) 
+predicted_test5 <- model_test_result5$net.result
+model_train_result6 <- neuralnet::compute(toyota_model6, toyota_train[2:33]) 
+predicted_train6<- model_train_result6$net.result
+model_test_result6 <- neuralnet::compute(toyota_model6, toyota_test[2:33]) 
+predicted_test6 <- model_test_result6$net.result
+
+
+
+
+#Rmse for train and test data
+rmse1_train <- sqrt(mean((predicted_train1-toyota_train$Price)^2))
+rmse2_train <- sqrt(mean((predicted_train2-toyota_train$Price)^2))
+rmse3_train <- sqrt(mean((predicted_train3-toyota_train$Price)^2))
+rmse4_train <- sqrt(mean((predicted_train4-toyota_train$Price)^2))
+rmse5_train <- sqrt(mean((predicted_train5-toyota_train$Price)^2))
+rmse6_train <- sqrt(mean((predicted_train6-toyota_train$Price)^2))
+rmse_train <- rbind(rmse1_train, rmse2_train, rmse3_train, rmse4_train, rmse5_train,
+                    rmse6_train)
+rmse1_test <- sqrt(mean((predicted_test1-toyota_test$Price)^2))
+rmse2_test <- sqrt(mean((predicted_test2-toyota_test$Price)^2))
+rmse3_test <- sqrt(mean((predicted_test3-toyota_test$Price)^2))
+
+rmse4_test <- sqrt(mean((predicted_test4-toyota_test$Price)^2))
+rmse5_test <- sqrt(mean((predicted_test5-toyota_test$Price)^2))
+rmse6_test <- sqrt(mean((predicted_test6-toyota_test$Price)^2))
+
+rmse_test<-rbind(rmse1_test, rmse2_test, rmse3_test, rmse4_test, rmse5_test, rmse6_test)
+
+rmse1_train
+rmse6_train
+# A. What happens to the RMS error (or Sum of Squares Error) for the training data as the
+# value of threshold decreases?
+# As the threshold decreases, so does the RMSE This is expected given the decrease in threshold decreases
+#the fit of the model.
+```{r}
+
+rmse1_test
+rmse6_test
+#B. What happens to the RMS error Sum of Squares Error for the validation data? 
+#As the threshold decreases, the RMSE decreases. This is surprisng as we expected the model to
+#overfit the training data; however, the rmse still decreases with the threshold
+
+
+
+#C. Conduct an experiment to assess the effect of changing the number of hidden
+#layer nodes (default 1), e.g., 1,2,4,8. 
+
+toyota_model31 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(1,1), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model32 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(2,2), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model34 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+toyota_model38 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(8,8), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+model_train_result31 <- neuralnet::compute(toyota_model31, toyota_train[2:33]) 
+predicted_train31<- model_train_result31$net.result
+model_test_result31 <- neuralnet::compute(toyota_model31, toyota_test[2:33]) 
+predicted_test31 <- model_test_result31$net.result
+
+
+model_train_result32 <- neuralnet::compute(toyota_model32, toyota_train[2:33]) 
+predicted_train32<- model_train_result32$net.result
+model_test_result32 <- neuralnet::compute(toyota_model32, toyota_test[2:33]) 
+predicted_test32 <- model_test_result32$net.result
+
+
+model_train_result34 <- neuralnet::compute(toyota_model34, toyota_train[2:33]) 
+predicted_train34<- model_train_result34$net.result
+model_test_result34 <- neuralnet::compute(toyota_model34, toyota_test[2:33]) 
+predicted_test34 <- model_test_result34$net.result
+
+
+model_train_result38 <- neuralnet::compute(toyota_model38, toyota_train[2:33]) 
+predicted_train38<- model_train_result38$net.result
+model_test_result38 <- neuralnet::compute(toyota_model38, toyota_test[2:33]) 
+predicted_test38 <- model_test_result38$net.result
+
+
+#Rmse for train and test data
+
+rmse31_train <- sqrt(mean((predicted_train31-toyota_train$Price)^2))
+rmse32_train <- sqrt(mean((predicted_train32-toyota_train$Price)^2))
+rmse34_train <- sqrt(mean((predicted_train34-toyota_train$Price)^2))
+rmse38_train <- sqrt(mean((predicted_train38-toyota_train$Price)^2))
+
+rmse_train <- rbind(rmse31_train, rmse32_train,rmse34_train,rmse38_train)
+
+
+rmse31_test <- sqrt(mean((predicted_test31-toyota_test$Price)^2))
+rmse32_test <- sqrt(mean((predicted_test32-toyota_test$Price)^2))
+rmse34_test <- sqrt(mean((predicted_test34-toyota_test$Price)^2))
+rmse38_test <- sqrt(mean((predicted_test38-toyota_test$Price)^2))
+
+rmse_test <- rbind(rmse31_test, rmse32_test,rmse34_test,rmse38_test)
+
+rmse_train
+rmse_test
+
+#We can see that as the number of hidden layer nodes increases, the RMSE decreases in both our training and test data
+
+```{r}
+
+
+
+#D. Conduct a similar experiment to assess the effect of changing the number of layers
+#from 1 to 2 in the network.
+
+
+set.seed(1234)
+toyota_modelOneLayer <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4,4), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+set.seed(1234)
+toyota_modelTwoLayers <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(4), threshold = 0.05,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = NULL, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+model_train_resultOneLayer <- neuralnet::compute(toyota_modelOneLayer, toyota_train[2:33]) 
+predicted_trainOneLayer<- model_train_resultOneLayer$net.result
+model_test_resultOneLayer <- neuralnet::compute(toyota_modelOneLayer, toyota_test[2:33]) 
+predicted_testOneLayer <- model_test_resultOneLayer$net.result
+
+
+model_train_resultTwoLayers <- neuralnet::compute(toyota_modelTwoLayers, toyota_train[2:33]) 
+predicted_trainTwoLayers<- model_train_resultTwoLayers$net.result
+model_test_resultTwoLayers <- neuralnet::compute(toyota_modelTwoLayers, toyota_test[2:33]) 
+predicted_testTwoLayers <- model_test_resultTwoLayers$net.result
+
+
+
+rmseOneLayer_train <- sqrt(mean((predicted_trainOneLayer-toyota_train$Price)^2))
+rmseTwoLayers_train <- sqrt(mean((predicted_trainTwoLayers-toyota_train$Price)^2))
+
+rmseLayers_train <- rbind(rmseOneLayer_train, rmseTwoLayers_train)
+
+
+rmseOneLayer_test <- sqrt(mean((predicted_testOneLayer-toyota_test$Price)^2))
+rmseTwoLayers_test <- sqrt(mean((predicted_testTwoLayers-toyota_test$Price)^2))
+
+rmseLayers_test <- rbind(rmseOneLayer_test, rmseTwoLayers_test)
+
+rmseLayers_train
+rmseLayers_test
+
+#We can observe that fewer layers mean the models are less accurate in this case. Therefore, RMSE increases for both the
+#training and test data with fewer layers.
+
+
+```{r}
+
+
+
+#E. Study the effect of gradient descent step size (learningrate) on the training
+#process and the network performance.
+
+toyota_model_GradientDescent <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(1,1), threshold = 0.001,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = .1, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+
+toyota_model_GradientDescent2 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(1,1), threshold = 0.001,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = .5, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+
+toyota_model_GradientDescent3 <- neuralnet(Price ~ Age_08_04 + Mfg_Month +Mfg_Year +KM
++HP +Met_Color +Automatic + cc+Doors +Gears +Quarterly_Tax +Weight +Mfr_Guarantee +
+BOVAG_Guarantee +Guarantee_Period +ABS +Airbag_1 +Airbag_2 +Airco +Automatic_airco
++Boardcomputer +CD_Player +Central_Lock +Powered_Windows +Power_Steering +Radio
++Mistlamps +Sport_Model +Backseat_Divider +Metallic_Rim +Radio_cassette
++Tow_Bar,
+data = toyota_train,hidden = c(1,1), threshold = 0.001,
+stepmax = 1e+05, rep = 1, startweights = NULL,
+learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+plus = 1.2), learningrate = .9, lifesign = "none",
+lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+constant.weights = NULL, likelihood = FALSE)
+
+```{r}
+
+
+model_train_resultGradientDescent<- neuralnet::compute(toyota_model_GradientDescent, toyota_train[2:33]) 
+predicted_trainGradientDescent<- model_train_resultGradientDescent$net.result
+model_test_resultGradientDescent <- neuralnet::compute(toyota_model_GradientDescent, toyota_test[2:33]) 
+predicted_testGradientDescent <- model_test_resultGradientDescent$net.result
+
+
+model_train_resultGradientDescent2<- neuralnet::compute(toyota_model_GradientDescent2, toyota_train[2:33]) 
+predicted_trainGradientDescent2<- model_train_resultGradientDescent2$net.result
+model_test_resultGradientDescent2 <- neuralnet::compute(toyota_model_GradientDescent2, toyota_test[2:33]) 
+predicted_testGradientDescent2 <- model_test_resultGradientDescent2$net.result
+
+
+model_train_resultGradientDescent3<- neuralnet::compute(toyota_model_GradientDescent3, toyota_train[2:33]) 
+predicted_trainGradientDescent3<- model_train_resultGradientDescent3$net.result
+model_test_resultGradientDescent3 <- neuralnet::compute(toyota_model_GradientDescent3, toyota_test[2:33]) 
+predicted_testGradientDescent3 <- model_test_resultGradientDescent3$net.result
+
+
+rmseGradientDescent_train <- sqrt(mean((predicted_trainGradientDescent-toyota_train$Price)^2))
+rmseGradientDescent2_train <- sqrt(mean((predicted_trainGradientDescent2-toyota_train$Price)^2))
+rmseGradientDescent3_train <- sqrt(mean((predicted_trainGradientDescent3-toyota_train$Price)^2))
+
+rmseGradient_train <- rbind(rmseGradientDescent_train, rmseGradientDescent2_train,rmseGradientDescent3_train)
+
+
+
+rmseGradientDescent_test <- sqrt(mean((predicted_testGradientDescent-toyota_test$Price)^2))
+rmseGradientDescent2_test <- sqrt(mean((predicted_testGradientDescent2-toyota_test$Price)^2))
+rmseGradientDescent3_test <- sqrt(mean((predicted_testGradientDescent3-toyota_test$Price)^2))
+
+rmseGradient_test <- rbind(rmseGradientDescent_test, rmseGradientDescent2_test,rmseGradientDescent3_test)
+
+rmseGradient_train
+rmseGradient_test
+
+#E. As learning rate continues to increase, the rmse decreases for both the training and test data.
+```{r}
